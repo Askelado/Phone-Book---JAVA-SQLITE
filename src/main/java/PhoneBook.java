@@ -36,4 +36,13 @@ _________________
 
         contacts.add(new Contact(name,number,relation));
     }
+
+    public void views(){
+
+        for (Contact c : contacts){
+        c.toString();
+
+        }
+        
+    }
 }
