@@ -1,9 +1,10 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 public class PhoneBook {
 
-    private int number;
-
     Scanner input = new Scanner(System.in);
+    ArrayList<Contact> contacts =new ArrayList<>();
+    private int number;
 
     public void menu() {
         System.out.println("Type the number of the operation you want\n");
@@ -24,5 +25,15 @@ _________________
         );
         number = input.nextInt();
     }
-    
+
+    public void add(){
+        System.out.println("what is the name of the person?");
+        String name = input.nextLine();
+        System.out.println("what is the number of the person?");
+        int number = input.nextInt();
+        System.out.println("what is your relationship with the person?");
+        String relation =input.nextLine();
+
+        contacts.add(new Contact(name,number,relation));
+    }
 }
