@@ -38,11 +38,28 @@ _________________
     }
 
     public void views(){
+        while (true) {
+            for (Contact c : contacts) {
+                c.toString();
+            }
+            System.out.println("type 1 to go back");
+            int num =input.nextInt();
+            if (num==1){
+                return;
+            }
+        }
+    }
+
+    public void remove(){
+        System.out.println("type the name of the contact you want to remove");
+        String name = input.nextLine();
 
         for (Contact c : contacts){
-        c.toString();
-
+            if (c.getname().equals(name)){
+                contacts.remove(this);
+                System.out.println("DONE");
+                return;
+            }
         }
-        
     }
 }
