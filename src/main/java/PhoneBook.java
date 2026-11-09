@@ -4,26 +4,60 @@ public class PhoneBook {
 
     Scanner input = new Scanner(System.in);
     ArrayList<Contact> contacts =new ArrayList<>();
-    private int number;
 
     public void menu() {
-        System.out.println("Type the number of the operation you want\n");
-        System.out.println("""
----------------**** PHONE DICTIONURAY ****-----------------                         
 
---- MENU ---
+        while (true) {
+            System.out.println("Type the number of the operation you want\n");
+            System.out.println("""
+                    ---------------**** PHONE DICTIONURAY ****-----------------                         
+                    
+                    --- MENU ---
+                    
+                    0-EXIT THE SYSTEM
+                    _________________
+                    1-ADD NEW CONTACT
+                    _________________
+                    2-SHOW ALL CONTACT
+                    _________________
+                    3-REMOVE A CONTACT
+                    _________________
+                    4-MODIFY A CONTACT                       
+                    
+                    """
+            );
 
-1-ADD NEW CONTACT
-_________________
-2-SHOW ALL CONTACT
-_________________
-3-REMOVE A CONTACT
-_________________
-4-MODIFY A CONTACT                       
+            System.out.print("Enter your choice: ");
+            int choice = input.nextInt();
+            input.nextLine();
 
-        """
-        );
-        number = input.nextInt();
+            switch (choice) {
+
+                case 0 -> {
+                    System.out.println("\nExiting Phone Dictionary... Goodbye!");
+                    System.exit(0);
+                }
+                case 1 -> {
+                    add();
+                    break;
+                }
+                case 2 -> {
+                    views();
+                    break;
+                }
+                case 3 -> {
+                    remove();
+                    break;
+                }
+                case 4 -> {
+
+                }
+
+                default -> System.out.println("\nInvalid choice! Please enter a number between 0 and 4.");
+            }
+
+            System.out.println();
+        }
     }
 
     public void add(){
@@ -35,6 +69,7 @@ _________________
         String relation =input.nextLine();
 
         contacts.add(new Contact(name,number,relation));
+        System.out.println("DONE");
     }
 
     public void views(){
