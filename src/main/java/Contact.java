@@ -3,11 +3,15 @@ public class Contact {
     private String name;
     private int phonenum;
     private String relation;
+    private int ID;
+    private static int IDcounter=1;
 
     public Contact(String name, int phonenum, String relation) {
             this.name = name;
             this.phonenum = phonenum;
             this.relation = relation;
+            ID = IDcounter;
+            IDcounter++;
         }
     public Contact() {
     }
@@ -36,9 +40,23 @@ public class Contact {
         this.relation = relation;
     }
 
+    public int getID() {
+        return ID;
+    }
+
+    public void setID(int ID) {
+        this.ID = ID;
+    }
+
+    public static int getIDcounter() {
+        return IDcounter;
+    }
+
+
     @Override
     public String toString() {
-        return "---------"+
+        return  "---------"+
+                ID+"\t\t" +
                 name+
                 "\t\t"+
                 phonenum+

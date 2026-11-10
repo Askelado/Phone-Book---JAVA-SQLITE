@@ -98,7 +98,7 @@ public class PhoneBook {
         }
     }
 
-    public void modify(){
+    public void modify() {
         System.out.println("Enter the number of attribute that you want to modify");
         System.out.println("""
                 1-name
@@ -106,20 +106,20 @@ public class PhoneBook {
                 3-relation 
                 """);
         int num = 0;
-        boolean bool =true;
-        while(bool)
-        num =input.nextInt();
-        switch (num){
+        boolean bool = true;
+        while (bool)
+            num = input.nextInt();
+        switch (num) {
             case 1 -> {
                 System.out.println("what name you want to modify?");
                 String oldName = input.nextLine();
                 System.out.println("what is the new value?");
-                String newname =input.nextLine();
-                for (Contact c : contacts){
-                    if (c.getname().equals(oldName)){
-                     c.setname(newname);
-                     System.out.println("Done");
-                     bool=false;
+                String newname = input.nextLine();
+                for (Contact c : contacts) {
+                    if (c.getname().equals(oldName)) {
+                        c.setname(newname);
+                        System.out.println("Done");
+                        bool = false;
                     }
                 }
             }
@@ -128,14 +128,19 @@ public class PhoneBook {
                 System.out.println("what phonenum you want to modify?");
                 int oldNum = input.nextInt();
                 System.out.println("what is the new value?");
-                int newNum =input.nextInt();
-                for (Contact c : contacts){
-                    if (c.getPhonenum() == oldNum){
+                int newNum = input.nextInt();
+                for (Contact c : contacts) {
+                    if (c.getPhonenum() == oldNum) {
                         c.setPhonenum(newNum);
                         System.out.println("Done");
-                        bool=false;
+                        bool = false;
+                    }
+                }
+            }
+
+            case 3 -> {
+
             }
         }
-
+        }
     }
-}
