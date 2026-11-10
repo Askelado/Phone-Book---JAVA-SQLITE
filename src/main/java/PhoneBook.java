@@ -77,7 +77,7 @@ public class PhoneBook {
             for (Contact c : contacts) {
                 c.toString();
             }
-            System.out.println("type 1 to go back");
+            System.out.println("type 1 to go back to the menu");
             int num =input.nextInt();
             if (num==1){
                 return;
@@ -86,11 +86,11 @@ public class PhoneBook {
     }
 
     public void remove(){
-        System.out.println("type the name of the contact you want to remove");
-        String name = input.nextLine();
+        System.out.println("type the ID you want to remove");
+        int id = input.nextInt();
 
         for (Contact c : contacts){
-            if (c.getname().equals(name)){
+            if (c.getID() == id){
                 contacts.remove(this);
                 System.out.println("DONE");
                 return;
@@ -99,48 +99,59 @@ public class PhoneBook {
     }
 
     public void modify() {
-        System.out.println("Enter the number of attribute that you want to modify");
-        System.out.println("""
-                1-name
-                2-phonenumber
-                3-relation 
-                """);
-        int num = 0;
         boolean bool = true;
-        while (bool)
-            num = input.nextInt();
-        switch (num) {
-            case 1 -> {
-                System.out.println("what name you want to modify?");
-                String oldName = input.nextLine();
-                System.out.println("what is the new value?");
-                String newname = input.nextLine();
-                for (Contact c : contacts) {
-                    if (c.getname().equals(oldName)) {
-                        c.setname(newname);
-                        System.out.println("Done");
-                        bool = false;
+        while (bool){
+          System.out.println("type the ID of the person that you want to modify");
+          int ID = input.nextInt();
+          for (Contact c : contacts) {
+                    if (c.getID() == ID) {
+                        System.out.println("Enter the number of attribute that you want to modify");
+                        System.out.println("""
+                                1-name
+                                2-phonenumber
+                                3-relation 
+                                4-back to the menu
+                                """);
+                        int num = 0;
+                        num = input.nextInt();
+                        switch (num) {
+                            case 1 -> {
+                                System.out.println("what is the new value?");
+                                String newName = input.nextLine();
+                                c.setname(newName);
+                                System.out.println("Done");
+                                bool = false;
+                                break;
+                            }
+
+                            case 2 -> {
+                                System.out.println("what is the new value?");
+                                int newNum = input.nextInt();
+                                c.setPhonenum(newNum);
+                                System.out.println("Done");
+                                bool = false;
+                                break;
+                            }
+
+                            case 3 -> {
+                                System.out.println("what is the new value?");
+                                String newRealation = input.nextLine();
+                                c.setRelation(newRealation);
+                                System.out.println("Done");
+                                bool = false;
+                                break;
+                            }
+
+                            case 4-> {
+                                return;
+                            }
+                        }
+                    }
+                    else {
+                        System.out.println("invalid input!");
+                        break;
                     }
                 }
             }
-
-            case 2 -> {
-                System.out.println("what phonenum you want to modify?");
-                int oldNum = input.nextInt();
-                System.out.println("what is the new value?");
-                int newNum = input.nextInt();
-                for (Contact c : contacts) {
-                    if (c.getPhonenum() == oldNum) {
-                        c.setPhonenum(newNum);
-                        System.out.println("Done");
-                        bool = false;
-                    }
-                }
-            }
-
-            case 3 -> {
-
-            }
-        }
         }
     }
