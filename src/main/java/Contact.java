@@ -4,7 +4,7 @@ public class Contact {
     private int phonenum;
     private String relation;
     private int ID;
-    private static int IDcounter=1;
+    public static int IDcounter=1;
 
     public Contact(String name, int phonenum, String relation) {
             this.name = name;
@@ -46,10 +46,6 @@ public class Contact {
 
     public void setID(int ID) {
         this.ID = ID;
-    }
-
-    public static int getIDcounter() {
-        return IDcounter;
     }
 
 

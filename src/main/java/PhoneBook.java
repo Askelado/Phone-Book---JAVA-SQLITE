@@ -89,11 +89,16 @@ public class PhoneBook {
         System.out.println("type the ID you want to remove");
         int id = input.nextInt();
 
-        for (Contact c : contacts){
-            if (c.getID() == id){
-                contacts.remove(this);
-                System.out.println("DONE");
-                return;
+        for (int i = 0; i < contacts.size(); i++) {
+            if (contacts.get(i).getID() == id) {
+                contacts.remove(i);
+
+                for (int j = i; j < contacts.size(); j++) {
+                    contacts.get(j).setID(contacts.get(j).getID() - 1);
+                }
+                Contact.IDcounter--;
+
+                break;
             }
         }
     }
