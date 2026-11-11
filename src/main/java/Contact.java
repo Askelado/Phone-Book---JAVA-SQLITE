@@ -51,14 +51,14 @@ public class Contact {
 
     @Override
     public String toString() {
-        return  "---------"+
+        return  "------   "+
                 ID+"\t\t" +
                 name+
                 "\t\t"+
                 phonenum+
                 "\t\t" +
                 relation+
-                "---------\n";
+                "   ------\n";
     }
 }
 

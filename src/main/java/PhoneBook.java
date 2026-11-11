@@ -3,7 +3,7 @@ import java.util.Scanner;
 public class PhoneBook {
 
     Scanner input = new Scanner(System.in);
-    ArrayList<Contact> contacts =new ArrayList<>();
+    ArrayList<Contact> contacts = new ArrayList<>();
 
     public void menu() {
 
@@ -50,7 +50,8 @@ public class PhoneBook {
                     break;
                 }
                 case 4 -> {
-
+                    modify();
+                    break;
                 }
 
                 default -> System.out.println("\nInvalid choice! Please enter a number between 0 and 4.");
@@ -60,34 +61,28 @@ public class PhoneBook {
         }
     }
 
-    public void add(){
+    public void add() {
         System.out.println("what is the name of the person?");
         String name = input.nextLine();
         System.out.println("what is the number of the person?");
         int number = input.nextInt();
         System.out.println("what is your relationship with the person?");
-        String relation =input.nextLine();
+        String relation = input.next();
 
-        contacts.add(new Contact(name,number,relation));
+        contacts.add(new Contact(name, number, relation));
         System.out.println("DONE");
     }
 
-    public void views(){
-        while (true) {
-            for (Contact c : contacts) {
-                c.toString();
-            }
-            System.out.println("type 1 to go back to the menu");
-            int num =input.nextInt();
-            if (num==1){
-                return;
-            }
+    public void views() {
+        for (Contact c : contacts) {
+            System.out.println(c.toString());
         }
     }
 
-    public void remove(){
+    public void remove() {
         System.out.println("type the ID you want to remove");
         int id = input.nextInt();
+        input.nextLine();
 
         for (int i = 0; i < contacts.size(); i++) {
             if (contacts.get(i).getID() == id) {
@@ -96,8 +91,14 @@ public class PhoneBook {
                 for (int j = i; j < contacts.size(); j++) {
                     contacts.get(j).setID(contacts.get(j).getID() - 1);
                 }
-                Contact.IDcounter--;
+                Contact.IDcounter = contacts.size() + 1;
+                System.out.println("DONE");
+                System.out.println("You entered ID: " + id);
 
+                for (Contact c : contacts) {
+                    System.out.println("Stored ID: " + c.getID()
+                            + " | Name: " + c.getname());
+                }
                 break;
             }
         }
@@ -105,16 +106,22 @@ public class PhoneBook {
 
     public void modify() {
         boolean bool = true;
+        boolean found = false;
         while (bool){
-          System.out.println("type the ID of the person that you want to modify");
+          System.out.println("type the ID of the person that you want to modify,\n type 0 to go back to the menu");
           int ID = input.nextInt();
+          input.nextLine();
+          if (ID == 0){
+              break;
+          }
           for (Contact c : contacts) {
                     if (c.getID() == ID) {
+                        found=true;
                         System.out.println("Enter the number of attribute that you want to modify");
                         System.out.println("""
                                 1-name
                                 2-phonenumber
-                                3-relation 
+                                3-relation
                                 4-back to the menu
                                 """);
                         int num = 0;
@@ -122,7 +129,7 @@ public class PhoneBook {
                         switch (num) {
                             case 1 -> {
                                 System.out.println("what is the new value?");
-                                String newName = input.nextLine();
+                                String newName = input.next();
                                 c.setname(newName);
                                 System.out.println("Done");
                                 bool = false;
@@ -140,7 +147,7 @@ public class PhoneBook {
 
                             case 3 -> {
                                 System.out.println("what is the new value?");
-                                String newRealation = input.nextLine();
+                                String newRealation = input.next();
                                 c.setRelation(newRealation);
                                 System.out.println("Done");
                                 bool = false;
@@ -151,12 +158,12 @@ public class PhoneBook {
                                 return;
                             }
                         }
-                    }
-                    else {
-                        System.out.println("invalid input!");
                         break;
                     }
                 }
+                   if (!found) {
+                       System.out.println("invalid input!");
+                   }
             }
         }
     }
