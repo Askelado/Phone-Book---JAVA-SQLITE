@@ -158,7 +158,7 @@ public class PhoneBook {
                                 return;
                             }
                         }
-                        break;
+
                     }
                 }
                    if (!found) {
