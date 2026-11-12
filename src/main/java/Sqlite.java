@@ -3,13 +3,32 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.sql.PreparedStatement;
 
 public class Sqlite {
 
     public static void main(String[] args) {
         connect();
         createNawTable();
+        insert("Abdullah","047939","r");
     }
+
+    private static void insert(String abdullah, String number, String r) {
+        String url = "jdbc:sqlite:contacts.db";
+        String sql = "INSERT INTO users(NAME,PHONENUM,RELATION) VALUES(?,?,?)";
+
+        try( Connection con =DriverManager.getConnection(url);
+             PreparedStatement prst = con.prepareStatement(sql);){
+            prst.setString(1,abdullah);
+            prst.setString(2,number);
+            prst.setString(3,r);
+            prst.executeUpdate();
+            System.out.println("inserted");
+        }catch (Exception e){
+        System.out.println(e);
+        }
+    }
+
 
     private static void createNawTable() {
         String url = "jdbc:sqlite:contacts.db";
