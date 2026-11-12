@@ -4,13 +4,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Sqlite {
 
     public static void main(String[] args) {
         connect();
-        createNawTable();
-        insert("Abdullah","047939","r");
+//        createNawTable();
+//        insert("Abdullah","047939","r");
+        printDate();
+    }
+
+    private static void printDate() {
+        String url = "jdbc:sqlite:contacts.db";
+        String sql = "SELECT ID,NAME,PHONENUM,RELATION FROM users";
+
+        try(Connection con = DriverManager.getConnection(url);
+            Statement st = con.createStatement()
+        ){
+            ResultSet r = st.executeQuery(sql);
+            while (r.next()){
+                System.out.println(r.getInt(1)+"\t"+ r.getString(2)+ "\t"+r.getInt(3)+"\t" + "\t" + r.getString(4)+"\n");
+
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
     }
 
     private static void insert(String abdullah, String number, String r) {
