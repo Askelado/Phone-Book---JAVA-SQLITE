@@ -10,10 +10,30 @@ public class Sqlite {
 
     public static void main(String[] args) {
         connect();
-//        createNawTable();
-//        insert("Abdullah","047939","r");
+        createNawTable();
+        insert("Abdullah","047939","r");
         printDate();
+        delete(1);
     }
+
+    private static void delete(int idd) {
+        String url = "jdbc:sqlite:contacts.db";
+        String sql = "DELETE FROM users" +
+                "\n WHERE ID = ?";
+
+        try(Connection con = DriverManager.getConnection(url);
+            PreparedStatement pr = con.prepareStatement(sql);
+            ){
+            pr.setInt(1,idd);
+            pr.executeUpdate();
+            System.out.println("delte is done");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+
+    }
+
 
     private static void printDate() {
         String url = "jdbc:sqlite:contacts.db";
@@ -36,7 +56,6 @@ public class Sqlite {
     private static void insert(String abdullah, String number, String r) {
         String url = "jdbc:sqlite:contacts.db";
         String sql = "INSERT INTO users(NAME,PHONENUM,RELATION) VALUES(?,?,?)";
-
         try( Connection con =DriverManager.getConnection(url);
              PreparedStatement prst = con.prepareStatement(sql);){
             prst.setString(1,abdullah);
@@ -56,12 +75,10 @@ public class Sqlite {
                 CREATE TABLE IF NOT EXISTS users (
                 ID INTEGER PRIMARY KEY,
                 NAME TEXT NOT NULL,
-                PHONENUM INTEGER NOT NULL,
+                PHONENUM INTEGER NOT NULL UNIQUE,
                 RELATION TEXT NOT NULL
                 );                
-                
                 """;
-
         try( Connection con = DriverManager.getConnection(url);
              Statement stmt = con.createStatement();){
             stmt.execute(sql);
