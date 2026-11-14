@@ -8,15 +8,16 @@ import java.sql.ResultSet;
 
 public class Sqlite {
 
-    public static void main(String[] args) {
-        connect();
-        createNawTable();
-        insert("Abdullah","047939","r");
-        printDate();
-        delete(1);
-    }
+//    public static void main(String[] args) {
+//        connect();
+//        createNawTable();
+//        insert("Abdullah","34447939","r");
+//        insert("Abdullah","02421939","r");
+//        printDate();
+//        delete(3);
+//    }
 
-    private static void delete(int idd) {
+    public void delete(int idd) {
         String url = "jdbc:sqlite:contacts.db";
         String sql = "DELETE FROM users" +
                 "\n WHERE ID = ?";
@@ -35,7 +36,7 @@ public class Sqlite {
     }
 
 
-    private static void printDate() {
+     public void printDate() {
         String url = "jdbc:sqlite:contacts.db";
         String sql = "SELECT ID,NAME,PHONENUM,RELATION FROM users";
 
@@ -53,7 +54,7 @@ public class Sqlite {
 
     }
 
-    private static void insert(String abdullah, String number, String r) {
+    public void insert(String abdullah, String number, String r) {
         String url = "jdbc:sqlite:contacts.db";
         String sql = "INSERT INTO users(NAME,PHONENUM,RELATION) VALUES(?,?,?)";
         try( Connection con =DriverManager.getConnection(url);
@@ -69,7 +70,7 @@ public class Sqlite {
     }
 
 
-    private static void createNawTable() {
+    public void createNawTable() {
         String url = "jdbc:sqlite:contacts.db";
         String sql = """
                 CREATE TABLE IF NOT EXISTS users (
@@ -91,7 +92,7 @@ public class Sqlite {
 
     }
 
-    private static void connect() {
+    public void connect() {
         String url = "jdbc:sqlite:contacts.db";
 
         try (Connection con = DriverManager.getConnection(url)) {
