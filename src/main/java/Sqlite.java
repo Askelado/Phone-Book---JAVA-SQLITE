@@ -1,22 +1,11 @@
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 
 public class Sqlite {
-
-//    public static void main(String[] args) {
-//        connect();
-//        createNawTable();
-//        insert("Abdullah","34447939","r");
-//        insert("Abdullah","02421939","r");
-//        printDate();
-//        delete(3);
-//        update(2,"abdullah");
-//    }
 
 
     public void connect() {
@@ -24,7 +13,7 @@ public class Sqlite {
 
         try (Connection con = DriverManager.getConnection(url)) {
             if (con != null) {
-                System.out.println("good");
+                System.out.println("database created");
             }
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -84,11 +73,11 @@ public class Sqlite {
     }
 
     public void update(int id, int phoneNum){
-        String url = "jdbc:sqlite:users.db";
+        String url = "jdbc:sqlite:contacts.db";
         String sql = """
                 UPDATE users
                 SET PHONENUM=?
-                WHERE ID= ?
+                WHERE ID= ?;
                 """;
         try(Connection con = DriverManager.getConnection(url);
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -104,11 +93,11 @@ public class Sqlite {
     }
 
     public void update(int id, String name){
-        String url = "jdbc:sqlite:users.db";
+        String url = "jdbc:sqlite:contacts.db";
         String sql = """
                 UPDATE users
                 SET NAME=?
-                WHERE ID= ?
+                WHERE ID= ?;
                 """;
         try(Connection con = DriverManager.getConnection(url);
             PreparedStatement stmt = con.prepareStatement(sql);
@@ -124,11 +113,11 @@ public class Sqlite {
     }
 
     public void update(String relation, int id){
-        String url = "jdbc:sqlite:users.db";
+        String url = "jdbc:sqlite:contacts.db";
         String sql = """
                 UPDATE users
                 SET RELATION=?
-                WHERE ID= ?
+                WHERE ID= ?;
                 """;
         try(Connection con = DriverManager.getConnection(url);
             PreparedStatement stmt = con.prepareStatement(sql);

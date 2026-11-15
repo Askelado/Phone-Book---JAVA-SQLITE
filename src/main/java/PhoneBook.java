@@ -112,7 +112,7 @@ public class PhoneBook {
 //        boolean bool = true;
 //        boolean found = false;
 //        while (bool){
-          System.out.println("type the ID of the person that you want to modify,\n type 0 to go back to the menu");
+          System.out.println("type the ID of the person that you want to modify,\ntype 0 to go back to the menu");
           int ID = input.nextInt();
           input.nextLine();
           if (ID == 0){
