@@ -8,67 +8,28 @@ import java.sql.ResultSet;
 
 public class Sqlite {
 
-//    public static void main(String[] args) {
-//        connect();
-//        createNawTable();
-//        insert("Abdullah","34447939","r");
-//        insert("Abdullah","02421939","r");
-//        printDate();
-//        delete(3);
-//    }
-
-    public void delete(int idd) {
-        String url = "jdbc:sqlite:contacts.db";
-        String sql = "DELETE FROM users" +
-                "\n WHERE ID = ?";
-
-        try(Connection con = DriverManager.getConnection(url);
-            PreparedStatement pr = con.prepareStatement(sql);
-            ){
-            pr.setInt(1,idd);
-            pr.executeUpdate();
-            System.out.println("delte is done");
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-
+    public static void main(String[] args) {
+        connect();
+        createNawTable();
+        insert("Abdullah","34447939","r");
+        insert("Abdullah","02421939","r");
+        printDate();
+        delete(3);
+        update(2,"abdullah");
     }
 
 
-     public void printDate() {
+    public void connect() {
         String url = "jdbc:sqlite:contacts.db";
-        String sql = "SELECT ID,NAME,PHONENUM,RELATION FROM users";
 
-        try(Connection con = DriverManager.getConnection(url);
-            Statement st = con.createStatement()
-        ){
-            ResultSet r = st.executeQuery(sql);
-            while (r.next()){
-                System.out.println(r.getInt(1)+"\t"+ r.getString(2)+ "\t"+r.getInt(3)+"\t" + "\t" + r.getString(4)+"\n");
-
+        try (Connection con = DriverManager.getConnection(url)) {
+            if (con != null) {
+                System.out.println("good");
             }
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-    }
-
-    public void insert(String abdullah, String number, String r) {
-        String url = "jdbc:sqlite:contacts.db";
-        String sql = "INSERT INTO users(NAME,PHONENUM,RELATION) VALUES(?,?,?)";
-        try( Connection con =DriverManager.getConnection(url);
-             PreparedStatement prst = con.prepareStatement(sql);){
-            prst.setString(1,abdullah);
-            prst.setString(2,number);
-            prst.setString(3,r);
-            prst.executeUpdate();
-            System.out.println("inserted");
-        }catch (Exception e){
-        System.out.println(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
-
 
     public void createNawTable() {
         String url = "jdbc:sqlite:contacts.db";
@@ -88,21 +49,58 @@ public class Sqlite {
             System.out.println(e.getMessage());
             }
 
-
-
     }
 
-    public void connect() {
+    public void insert(String abdullah, String number, String r) {
         String url = "jdbc:sqlite:contacts.db";
-
-        try (Connection con = DriverManager.getConnection(url)) {
-            if (con != null) {
-                System.out.println("good");
-            }
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+        String sql = "INSERT INTO users(NAME,PHONENUM,RELATION) VALUES(?,?,?)";
+        try( Connection con =DriverManager.getConnection(url);
+             PreparedStatement prst = con.prepareStatement(sql);){
+            prst.setString(1,abdullah);
+            prst.setString(2,number);
+            prst.setString(3,r);
+            prst.executeUpdate();
+            System.out.println("inserted");
+        }catch (Exception e){
+        System.out.println(e);
         }
     }
 
+    public void delete(int idd) {
+        String url = "jdbc:sqlite:contacts.db";
+        String sql = "DELETE FROM users" +
+                "\n WHERE ID = ?";
+
+        try(Connection con = DriverManager.getConnection(url);
+            PreparedStatement pr = con.prepareStatement(sql);
+            ){
+            pr.setInt(1,idd);
+            pr.executeUpdate();
+            System.out.println("delte is done");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+
+
+     public void printDate() {
+        String url = "jdbc:sqlite:contacts.db";
+        String sql = "SELECT ID,NAME,PHONENUM,RELATION FROM users";
+
+        try(Connection con = DriverManager.getConnection(url);
+            Statement st = con.createStatement()
+        ){
+            ResultSet r = st.executeQuery(sql);
+            while (r.next()){
+                System.out.println(r.getInt(1)+"\t"+ r.getString(2)+ "\t"+r.getInt(3)+"\t" + "\t" + r.getString(4)+"\n");
+
+            }
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
 
 }

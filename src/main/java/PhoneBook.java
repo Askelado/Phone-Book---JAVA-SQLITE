@@ -66,7 +66,7 @@ public class PhoneBook {
     public void add() {
         System.out.println("what is the name of the person?");
         String name = input.nextLine();
-        System.out.println("what is the number of the person?");
+        System.out.println("what is the PhoneNumber of the person?");
         int number = input.nextInt();
         System.out.println("what is your relationship with the person?");
         String relation = input.next();
