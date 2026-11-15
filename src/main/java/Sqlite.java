@@ -83,7 +83,25 @@ public class Sqlite {
 
     }
 
+    public void update(int id, int phoneNum){
+        String url = "jdbc:sqlite:users.db";
+        String sql = """
+                UPDATE users
+                SET PHONENUM=?
+                WHERE ID= ?
+                """;
+        try(Connection con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement(sql);
+        ){
+            stmt.setInt(1,phoneNum);
+            stmt.setInt(2,id);
+            stmt.executeUpdate();
+            System.out.println("Modified");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
 
+    }
 
      public void printDate() {
         String url = "jdbc:sqlite:contacts.db";
