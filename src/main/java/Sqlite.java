@@ -8,15 +8,15 @@ import java.sql.ResultSet;
 
 public class Sqlite {
 
-    public static void main(String[] args) {
-        connect();
-        createNawTable();
-        insert("Abdullah","34447939","r");
-        insert("Abdullah","02421939","r");
-        printDate();
-        delete(3);
-        update(2,"abdullah");
-    }
+//    public static void main(String[] args) {
+//        connect();
+//        createNawTable();
+//        insert("Abdullah","34447939","r");
+//        insert("Abdullah","02421939","r");
+//        printDate();
+//        delete(3);
+//        update(2,"abdullah");
+//    }
 
 
     public void connect() {
@@ -96,7 +96,47 @@ public class Sqlite {
             stmt.setInt(1,phoneNum);
             stmt.setInt(2,id);
             stmt.executeUpdate();
-            System.out.println("Modified");
+            System.out.println("Phone Number Modified");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void update(int id, String name){
+        String url = "jdbc:sqlite:users.db";
+        String sql = """
+                UPDATE users
+                SET NAME=?
+                WHERE ID= ?
+                """;
+        try(Connection con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement(sql);
+        ){
+            stmt.setString(1,name);
+            stmt.setInt(2,id);
+            stmt.executeUpdate();
+            System.out.println("Name Modified");
+        }catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+
+    }
+
+    public void update(String relation, int id){
+        String url = "jdbc:sqlite:users.db";
+        String sql = """
+                UPDATE users
+                SET RELATION=?
+                WHERE ID= ?
+                """;
+        try(Connection con = DriverManager.getConnection(url);
+            PreparedStatement stmt = con.prepareStatement(sql);
+        ){
+            stmt.setString(1,relation);
+            stmt.setInt(2,id);
+            stmt.executeUpdate();
+            System.out.println("Relation Modified");
         }catch (Exception e){
             System.out.println(e.getMessage());
         }
