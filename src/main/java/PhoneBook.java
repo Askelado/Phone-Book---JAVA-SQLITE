@@ -1,16 +1,22 @@
-import java.util.ArrayList;
+// Import Scanner class to read user input from the console
 import java.util.Scanner;
-public class PhoneBook {
-    Sqlite sql =new Sqlite();
-    Scanner input = new Scanner(System.in);
-   // ArrayList<Contact> contacts = new ArrayList<>();
 
+public class PhoneBook {
+    // Create instances of the Sqlite helper class and Scanner for user input
+    Sqlite sql = new Sqlite();
+    Scanner input = new Scanner(System.in);
+
+    // Displays the main menu and handles user navigation in an infinite loop
     public void menu() {
 
+        // Initialize database connection and ensure the table exists before starting
         sql.connect();
         sql.createNawTable();
+
+        // Infinite loop to keep the program running until the user chooses to exit (0)
         while (true) {
             System.out.println("Type the number of the operation you want\n");
+            // Text block (""" ... """) to display the formatted menu options
             System.out.println("""
                     ---------------**** PHONE DICTIONURAY ****-----------------                         
                     
@@ -31,13 +37,14 @@ public class PhoneBook {
 
             System.out.print("Enter your choice: ");
             int choice = input.nextInt();
-            input.nextLine();
+            input.nextLine(); // Consume the leftover newline character (\n) from nextInt()
 
+            // Modern switch expression (rule switch) using '->' to route user choices
             switch (choice) {
 
                 case 0 -> {
                     System.out.println("\nExiting Phone Dictionary... Goodbye!");
-                    System.exit(0);
+                    System.exit(0); // Immediately terminates the Java program
                 }
                 case 1 -> {
                     add();
@@ -56,6 +63,7 @@ public class PhoneBook {
                     break;
                 }
 
+                // Runs if the user enters any number other than 0-4
                 default -> System.out.println("\nInvalid choice! Please enter a number between 0 and 4.");
             }
 
@@ -63,96 +71,81 @@ public class PhoneBook {
         }
     }
 
+    // Collects contact details from the user and saves them to the database
     public void add() {
         System.out.println("what is the name of the person?");
-        String name = input.nextLine();
+        String name = input.nextLine(); // Reads full line (allows spaces in the name)
+
         System.out.println("what is the PhoneNumber of the person?");
         int number = input.nextInt();
-        System.out.println("what is your relationship with the person?");
-        String relation = input.next();
 
-        //contacts.add(new Contact(name, number, relation));
-        sql.insert(name,String.valueOf(number),relation);
+        System.out.println("what is your relationship with the person?");
+        String relation = input.next(); // Reads a single word
+
+        // String.valueOf(number) converts the int phone number into a String to match insert() parameters
+        sql.insert(name, String.valueOf(number), relation);
         System.out.println("DONE");
     }
 
+    // Calls the database method to print all stored contacts
     public void views() {
-//        for (Contact c : contacts) {
-//            System.out.println(c.toString());
-//        }
         sql.printDate();
     }
 
+    // Prompts for a contact ID and deletes that record from the database
     public void remove() {
         System.out.println("type the ID you want to remove");
         int id = input.nextInt();
-        input.nextLine();
+        input.nextLine(); // Clears the input buffer
         sql.delete(id);
-//        for (int i = 0; i < contacts.size(); i++) {
-//            if (contacts.get(i).getID() == id) {
-//                contacts.remove(i);
-//
-//                for (int j = i; j < contacts.size(); j++) {
-//                    contacts.get(j).setID(contacts.get(j).getID() - 1);
-//                }
-//                Contact.IDcounter = contacts.size() + 1;
-//                System.out.println("DONE");
-//                System.out.println("You entered ID: " + id);
-//
-//                for (Contact c : contacts) {
-//                    System.out.println("Stored ID: " + c.getID()
-//                            + " | Name: " + c.getname());
-//                }
-//                break;
-//            }
-//        }
     }
 
+    // Prompts for a contact ID and allows updating one of its attributes (name, phone, or relation)
     public void modify() {
-//        boolean bool = true;
-//        boolean found = false;
-//        while (bool){
-          System.out.println("type the ID of the person that you want to modify,\ntype 0 to go back to the menu");
-          int ID = input.nextInt();
-          input.nextLine();
-          if (ID == 0){
-              return;
-          }
-                        System.out.println("Enter the number of attribute that you want to modify");
-                        System.out.println("""
-                                1-name
-                                2-phonenumber
-                                3-relation
-                                4-back to the menu
-                                """);
-                        int num = 0;
-                        num = input.nextInt();
-                        switch (num) {
-                            case 1 -> {
-                                System.out.println("what is the new value?");
-                                String newName = input.next();
-                                sql.update(ID,newName);
-                                break;
-                            }
+        System.out.println("type the ID of the person that you want to modify,\ntype 0 to go back to the menu");
+        int ID = input.nextInt();
+        input.nextLine();
 
-                            case 2 -> {
-                                System.out.println("what is the new value?");
-                                int newNum = input.nextInt();
-                                sql.update(ID,newNum);
-                                break;
-                            }
+        // Early return: exits the modify() method and returns to menu() if user enters 0
+        if (ID == 0) {
+            return;
+        }
 
-                            case 3 -> {
-                                System.out.println("what is the new value?");
-                                String newRealation = input.next();
-                                sql.update(newRealation,ID);
-                                break;
-                            }
+        System.out.println("Enter the number of attribute that you want to modify");
+        System.out.println("""
+                1-name
+                2-phonenumber
+                3-relation
+                """);
+        int num = 0;
+        num = input.nextInt();
 
-                            case 4-> {
-                                return;
-                            }
-                        }
+        // Calls the appropriate overloaded sql.update() method based on the chosen attribute
+        switch (num) {
+            case 1 -> {
+                System.out.println("what is the new value?");
+                String newName = input.next();
+                sql.update(ID, newName); // Calls update(int, String)
+                break;
+            }
 
-                    }
-                }
+            case 2 -> {
+                System.out.println("what is the new value?");
+                int newNum = input.nextInt();
+                sql.update(ID, newNum);  // Calls update(int, int)
+                break;
+            }
+
+            case 3 -> {
+                System.out.println("what is the new value?");
+                String newRealation = input.next();
+                sql.update(newRealation, ID); // Calls update(String, int)
+                break;
+            }
+
+            default -> {
+                System.out.println("invalid input!");
+            }
+        }
+    }
+}
